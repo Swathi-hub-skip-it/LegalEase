@@ -68,6 +68,15 @@
         <div class="card">
 
             <h2>Generated Document</h2>
+            <button type="button" onclick="toggleEdit()" id="editButton">
+                 Edit Document
+            </button>
+
+            <textarea id="editArea" style="display:none; margin-top:15px; min-height:400px;">{{ result | striptags }}</textarea>
+
+            <button type="button" onclick="saveEdit()" id="saveButton" style="display:none; margin-top:10px;">
+                 Save Changes
+            </button>
 
             <br>
 
@@ -77,9 +86,24 @@
             <br>
             <br>
 
-            <button type="button" onclick="window.print()">
-                Download / Save as PDF
-            </button>
+           <div class="download-buttons">
+
+        <form method="POST" action="{{ url_for('download_txt') }}">
+            <input type="hidden" name="content" value="{{ result | striptags }}">
+            <button type="submit">Download TXT</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('download_docx') }}">
+            <input type="hidden" name="content" value="{{ result | striptags }}">
+            <button type="submit">Download DOCX</button>
+         </form>
+
+        <form method="POST" action="{{ url_for('download_pdf') }}">
+            <input type="hidden" name="content" value="{{ result | striptags }}">
+            <button type="submit">Download PDF</button>
+        </form>
+
+</div>
         </div>
 
         {% endif %}
@@ -93,6 +117,22 @@ function showLoading() {
     button.disabled = true;
 }
 </script>
+<script>
+function toggleEdit() {
+    document.getElementById("editArea").style.display = "block";
+    document.getElementById("saveButton").style.display = "block";
+    document.getElementById("editButton").style.display = "none";
+}
 
+function saveEdit() {
+    const editedText = document.getElementById("editArea").value;
+
+    document.querySelector(".result").innerText = editedText;
+
+    document.getElementById("editArea").style.display = "none";
+    document.getElementById("saveButton").style.display = "none";
+    document.getElementById("editButton").style.display = "block";
+}
+</script>
 </body>
 </html>

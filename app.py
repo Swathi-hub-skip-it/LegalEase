@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 from google import genai
 from dotenv import load_dotenv
 import os
 import markdown
+from io import BytesIO
+from docx import Document
+from fpdf import FPDF
 
 load_dotenv()
 
@@ -14,7 +17,67 @@ if not api_key:
     raise ValueError("GEMINI_API_KEY is missing in .env file")
 
 client = genai.Client(api_key=api_key)
+@app.route("/download/txt", methods=["POST"])
+def download_txt():
+    content = request.form.get("content", "")
 
+    file = BytesIO()
+    file.write(content.encode("utf-8"))
+    file.seek(0)
+
+    return send_file(
+        file,
+        as_attachment=True,
+        download_name="LegalEase_Document.txt",
+        mimetype="text/plain"
+    )
+
+
+@app.route("/download/docx", methods=["POST"])
+def download_docx():
+    content = request.form.get("content", "")
+
+    document = Document()
+    document.add_heading("LegalEase Legal Document", 0)
+
+    for line in content.splitlines():
+        if line.strip():
+            document.add_paragraph(line)
+
+    file = BytesIO()
+    document.save(file)
+    file.seek(0)
+
+    return send_file(
+        file,
+        as_attachment=True,
+        download_name="LegalEase_Document.docx",
+        mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+
+
+@app.route("/download/pdf", methods=["POST"])
+def download_pdf():
+    content = request.form.get("content", "")
+
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+
+    for line in content.splitlines():
+        if line.strip():
+            pdf.multi_cell(0, 8, line)
+
+    pdf_bytes = bytes(pdf.output())
+
+    file = BytesIO(pdf_bytes)
+
+    return send_file(
+        file,
+        as_attachment=True,
+        download_name="LegalEase_Document.pdf",
+        mimetype="application/pdf"
+    )
 @app.route("/history")
 def history():
     return render_template("history.html", documents=documents)
