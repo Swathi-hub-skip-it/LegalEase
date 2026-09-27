@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegalEase - AI Legal Document Generator</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>LegalEase</h1>
+            <p>AI-Powered Legal Document Generator</p>
+        </div>
+
+        <div class="card">
+
+            <form method="POST" onsubmit="showLoading()">
+
+                <label for="document_type">Document Type</label>
+
+                <select name="document_type" id="document_type" required>
+                    <option value="">Select Document Type</option>
+                    <option value="Rental Agreement">Rental Agreement</option>
+                    <option value="Leave and License Agreement">
+                        Leave and License Agreement
+                    </option>
+                    <option value="Employment Agreement">
+                        Employment Agreement
+                    </option>
+                    <option value="Non-Disclosure Agreement">
+                        Non-Disclosure Agreement
+                    </option>
+                    <option value="Affidavit">Affidavit</option>
+                    <option value="General Legal Notice">
+                        General Legal Notice
+                    </option>
+                </select>
+
+                <label for="details">Enter Details</label>
+
+                <textarea
+                    name="details"
+                    id="details"
+                    placeholder="Enter the required details here..."
+                    required
+                ></textarea>
+
+                <button type="submit">
+                    Generate Legal Document
+                </button>
+                <br>
+
+                <a href="{{ url_for('history') }}" class="history-link">
+                    View Document History
+                </a>
+
+            </form>
+
+        </div>
+
+        {% if result %}
+
+        <div class="card">
+
+            <h2>Generated Document</h2>
+
+            <br>
+
+            <div class="result">
+                {{ result | safe}}
+            </div>
+            <br>
+            <br>
+
+            <button type="button" onclick="window.print()">
+                Download / Save as PDF
+            </button>
+        </div>
+
+        {% endif %}
+
+    </div>
+<script>
+function showLoading() {
+    const button = document.querySelector('button[type="submit"]');
+
+    button.innerText = "Generating Document... ⏳";
+    button.disabled = true;
+}
+</script>
+
+</body>
+</html>

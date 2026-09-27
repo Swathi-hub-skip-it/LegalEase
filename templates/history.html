@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LegalEase - Document History</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>Document History</h1>
+            <p>Your previously generated legal documents</p>
+        </div>
+        <a href="{{ url_for('home') }}" class="history-link">
+            ← Back to Home
+        </a>
+
+        {% if documents %}
+
+            {% for document in documents %}
+
+            <div class="card">
+
+                <h2>{{ document.document_type }}</h2>
+
+                <p>
+                    <strong>Details:</strong>
+                </p>
+
+                <p>{{ document.details }}</p>
+
+                <hr>
+
+                <div class="result">
+                    {{ document.content | safe }}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="card">
+                <h2>No Documents Yet</h2>
+                <p>Generate a legal document to see it here.</p>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

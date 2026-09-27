@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    padding: 40px 20px;
+    color: #1e293b;
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 42px;
+    color: #4338ca;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 18px;
+    color: #64748b;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+select,
+textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #6366f1;
+}
+
+textarea {
+    min-height: 180px;
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #4f46e5;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3730a3;
+}
+
+.result {
+    white-space: pre-wrap;
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 5px solid #4f46e5;
+    line-height: 1.6;
+}
+@media print {
+
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .header,
+    form,
+    button {
+        display: none;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .card {
+        box-shadow: none;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .result {
+        border-left: none;
+        background: white;
+    }
+}
+.history-link {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 10px;
+    background: #eef2ff;
+    color: #4338ca;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.history-link:hover {
+    background: #e0e7ff;
+}
